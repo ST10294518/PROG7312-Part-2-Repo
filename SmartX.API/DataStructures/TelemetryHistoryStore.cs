@@ -4,6 +4,7 @@ namespace SmartX.API.DataStructures;
 
 public class TelemetryHistoryStore
 {
+    // Optimized telemetry history using List<T>.
     private readonly List<TelemetryRecord> _records = new();
 
     // Raw historical telemetry represented as jagged arrays.
@@ -11,15 +12,48 @@ public class TelemetryHistoryStore
 
     public IReadOnlyList<TelemetryRecord> Records => _records;
 
+    // ============================================================
+    // ADD TELEMETRY RECORD
+    // ============================================================
+
     public void Add(TelemetryRecord record)
     {
         _records.Add(record);
+
+        /*
+         * Numeric telemetry is also represented as a jagged array
+         * batch before being retained in the optimized List<T>
+         * collection.
+         *
+         * Each batch can contain a different number of rows,
+         * demonstrating the flexible memory layout of jagged arrays.
+         */
+        if (record.IsNumeric)
+        {
+            double[][] rawBatch =
+            {
+                new[]
+                {
+                    record.NumericValue
+                }
+            };
+
+            AddRawBatch(rawBatch);
+        }
     }
+
+    // ============================================================
+    // ADD RAW JAGGED ARRAY BATCH
+    // ============================================================
 
     public void AddRawBatch(double[][] batch)
     {
         _rawBatches.Add(batch);
     }
+
+    // ============================================================
+    // LATEST TELEMETRY
+    // ============================================================
 
     public List<TelemetryRecord> GetLatest(int count)
     {
@@ -28,6 +62,10 @@ public class TelemetryHistoryStore
             .Take(count)
             .ToList();
     }
+
+    // ============================================================
+    // SENSOR TELEMETRY HISTORY
+    // ============================================================
 
     public List<TelemetryRecord> GetSensorHistory(
         string sensorId,
@@ -41,5 +79,15 @@ public class TelemetryHistoryStore
             .ToList();
     }
 
+    // ============================================================
+    // COLLECTION COUNT
+    // ============================================================
+
     public int Count => _records.Count;
+
+    // ============================================================
+    // RAW BATCH COUNT
+    // ============================================================
+
+    public int RawBatchCount => _rawBatches.Count;
 }
