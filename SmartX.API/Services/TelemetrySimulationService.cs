@@ -35,6 +35,8 @@ public class TelemetrySimulationService : BackgroundService
                 var sensors =
                     sensorService.GetAll();
 
+                sensorService.CheckDisconnectedSensors();
+
                 foreach (var sensor in sensors)
                 {
                     if (sensor.SensorCategory ==

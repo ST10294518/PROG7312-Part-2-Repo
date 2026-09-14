@@ -605,3 +605,32 @@ footer {
         grid-template-columns: 1fr;
     }
 }
+@media (max-width: 650px) {
+    .table-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+        .table-wrapper table {
+            width: 100%;
+            min-width: 0;
+            table-layout: fixed;
+        }
+
+        .table-wrapper th,
+        .table-wrapper td {
+            padding: 10px 6px;
+            font-size: 10px;
+            word-break: break-word;
+            overflow-wrap: anywhere;
+        }
+
+        .table-wrapper .sensor-name {
+            word-break: break-word;
+        }
+
+        .table-wrapper .value-cell {
+            word-break: normal;
+        }
+}

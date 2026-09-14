@@ -101,6 +101,18 @@ public class SensorService
             part.Length == 2 &&
             part.All(c => Uri.IsHexDigit(c)));
     }
+    public void CheckDisconnectedSensors(int timeoutSeconds = 15)
+    {
+        var cutoff = DateTime.UtcNow.AddSeconds(-timeoutSeconds);
+
+        foreach (var sensor in _sensors)
+        {
+            if (sensor.LastSeen < cutoff)
+            {
+                sensor.Status = "Disconnected";
+            }
+        }
+    }
 
     private void SeedSensors()
     {
@@ -119,4 +131,5 @@ public class SensorService
             "Control Room",
             "Actuator");
     }
+
 }
