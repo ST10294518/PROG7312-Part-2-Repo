@@ -1,970 +1,305 @@
-﻿Absolutely. Here is **one complete `README.md` file**, ready to paste directly into your blank README. I’ve kept it focused on **Part 1**, based on your actual Smart-X implementation, without adding unnecessary Part 2 functionality.
+﻿Smart-X IoT Mesh Ecosystem
+Programming 3B – Advanced Application Development POE
+Part 1 – Sensor Data Ingestion and Telemetry
 
-````markdown
-# Smart-X IoT Mesh Ecosystem
+Smart-X is an IoT Mesh Ecosystem application developed for the Programming 3B Advanced Application Development POE. The application provides a web-based dashboard that allows users to register and monitor IoT sensors, submit and retrieve telemetry data, detect telemetry anomalies, validate deployment configurations, and securely attach media and log files to individual sensors.
 
-## Programming 3B – Advanced Application Development POE
+The implementation completed for Part 1 focuses on the Sensor Data Ingestion and Telemetry pillar of the Smart-X ecosystem. The remaining system pillars are intentionally disabled because they are reserved for later POE phases.
 
-### Part 1 – Sensor Data Ingestion and Telemetry
+System Pillars
 
-Smart-X is an IoT Mesh Ecosystem application developed for the Programming 3B Advanced Application Development POE.
+The Smart-X dashboard presents three major system pillars.
 
-The purpose of the Smart-X system is to provide a web-based IoT dashboard that allows users to register sensors, receive and process telemetry data, monitor sensor activity, detect anomalies, validate deployment configurations, and securely attach media or log files to individual sensors.
+The first pillar, Sensor Data Ingestion and Telemetry, is active and implemented in Part 1. It provides sensor registration, telemetry ingestion, telemetry monitoring, anomaly detection, sensor status monitoring, telemetry history, media and log uploads, encrypted file storage, and recursive deployment validation.
 
-Part 1 focuses on the **Sensor Data Ingestion and Telemetry** pillar of the Smart-X system.
+The second pillar, Real-Time Command Stream and History, is disabled in Part 1 and is reserved for Part 2. Command processing and command-history functionality are therefore not implemented as part of the current Part 1 scope.
 
-The remaining system pillars are intentionally disabled because they are implemented in later POE phases.
+The third pillar, Network Topology and Mesh Routing, is also disabled. This functionality is reserved for the final POE phase, where network topology, mesh routing and related optimisation functionality will be implemented.
 
----
+Technologies Used
 
-# 1. Part 1 System Pillars
+The Smart-X backend is developed using C# and .NET 10 with ASP.NET Core Web API. The API uses controllers and Swagger/OpenAPI to expose and document the available endpoints.
 
-The Smart-X dashboard contains three system pillars.
+The frontend is developed using React and Vite, with JavaScript, JSX and CSS used to create the dashboard interface. The interface is responsive and is designed to work across different screen sizes.
 
-### Active – Part 1
+Other technologies and development tools used include Visual Studio, Developer PowerShell, Node.js, npm, Git and GitHub.
 
-**Sensor Data Ingestion & Telemetry**
+Project Structure
 
-This is the active pillar implemented in Part 1.
+The project consists of two main applications.
 
-It provides:
-
-- Sensor registration
-- Sensor identification
-- Deployment location management
-- Sensor category management
-- Telemetry ingestion
-- Telemetry history
-- Float, integer and Boolean telemetry
-- Anomaly detection
-- Sensor online/disconnected monitoring
-- Media and log uploads
-- Encrypted file storage
-- Recursive deployment validation
-- API integration
-- Responsive dashboard
-
-### Disabled – Part 2
-
-**Real-Time Command Stream & History**
-
-This functionality is intentionally disabled and reserved for Part 2.
-
-### Disabled – Final POE
-
-**Network Topology & Mesh Routing**
-
-This functionality is intentionally disabled and reserved for the final POE phase.
-
----
-
-# 2. Technologies Used
-
-## Backend
-
-- C#
-- .NET 10
-- ASP.NET Core Web API
-- ASP.NET Core Controllers
-- Swagger / OpenAPI
-- Background Services
-- Generic C# classes
-- Operator overloading
-- Lists
-- Jagged arrays
-- Recursive validation
-
-## Frontend
-
-- React
-- Vite
-- JavaScript
-- JSX
-- CSS
-- Responsive Web Design
-
-## Development Tools
-
-- Visual Studio
-- Developer PowerShell
-- Node.js
-- npm
-- Git
-- GitHub
-
----
-
-# 3. Project Structure
-
-```text
-SmartX/
-│
-├── SmartX.API/
-│   │
-│   ├── Controllers/
-│   │   ├── DemoController.cs
-│   │   ├── DeploymentController.cs
-│   │   ├── FileController.cs
-│   │   ├── SensorController.cs
-│   │   ├── SystemController.cs
-│   │   └── TelemetryController.cs
-│   │
-│   ├── DataStructures/
-│   │   ├── SensorCollection.cs
-│   │   └── TelemetryHistoryStore.cs
-│   │
-│   ├── Models/
-│   │   ├── DeploymentNode.cs
-│   │   ├── Sensor.cs
-│   │   ├── TelemetryInput.cs
-│   │   ├── TelemetryPacket.cs
-│   │   └── TelemetryRecord.cs
-│   │
-│   ├── Services/
-│   │   ├── DeploymentValidator.cs
-│   │   ├── FileService.cs
-│   │   ├── SensorService.cs
-│   │   ├── TelemetryService.cs
-│   │   └── TelemetrySimulationService.cs
-│   │
-│   ├── Uploads/
-│   ├── Program.cs
-│   ├── SmartX.API.csproj
-│   ├── appsettings.json
-│   └── Properties/
-│
-├── SmartX.Client/
-│   │
-│   ├── src/
-│   │   ├── App.jsx
-│   │   ├── App.css
-│   │   ├── index.css
-│   │   └── main.jsx
-│   │
-│   ├── package.json
-│   ├── package-lock.json
-│   └── vite.config.js
-│
-├── Evidence/
-│
-├── SmartX.sln
-└── README.md
-````
-
----
-
-# 4. Prerequisites
-
-The following software is required to run the project:
-
-* .NET 10 SDK
-* Node.js
-* npm
-* Visual Studio with .NET 10 support
-* Git
+The SmartX.API project contains the .NET backend. It includes controllers for sensors, telemetry, files, deployment validation, system status and demonstration data. It also contains the models, services and custom data structures required by the application.
 
-Check the installed .NET version:
-
-```powershell
-dotnet --version
-```
-
-Check the installed Node.js version:
-
-```powershell
-node --version
-```
-
-Check the installed npm version:
-
-```powershell
-npm --version
-```
-
----
-
-# 5. Clone the Repository
-
-Clone the GitHub repository:
-
-```powershell
-git clone <YOUR-GITHUB-REPOSITORY-URL>
-```
+The SmartX.Client project contains the React frontend. The main user interface is implemented through the React source files, including App.jsx, App.css, index.css and main.jsx.
 
-Navigate into the project directory:
-
-```powershell
-cd SmartX
-```
+An Evidence folder contains screenshots demonstrating the functionality implemented and tested for Part 1.
 
-Open the solution:
+The solution file is SmartX.sln.
 
-```text
-SmartX.sln
-```
+Backend Functionality
 
----
+The Smart-X API acts as the main backend service for the application. The React client communicates with the API to register sensors, submit telemetry, retrieve telemetry information, upload files and validate deployment configurations.
 
-# 6. Backend Setup
+The API provides the following main endpoint groups:
 
-Open a Developer PowerShell terminal.
+System: The system status endpoint provides information about the Smart-X gateway and identifies the active Part 1 module.
 
-Navigate to the API project:
+Sensor: The sensor endpoints allow registered sensors to be retrieved and new sensors to be registered.
 
-```powershell
-cd SmartX.API
-```
+Telemetry: The telemetry endpoints allow telemetry data to be submitted, retrieved and analysed. Telemetry statistics and sensor-specific telemetry history can also be retrieved.
 
-Restore the .NET dependencies:
+File: The file upload endpoint allows media, configuration and log files to be attached to a specific sensor.
 
-```powershell
-dotnet restore
-```
+Deployment: The deployment validation endpoint recursively validates nested deployment configurations.
 
-Build the API:
+Demo: The demo endpoint can be used to generate demonstration telemetry data.
 
-```powershell
-dotnet build
-```
+Sensor Registration
 
-A successful build should display:
+Smart-X allows users to register IoT sensors through the dashboard.
 
-```text
-Build succeeded.
-```
+Each sensor contains a unique identifier, MAC address, deployment location, sensor category, status, registration timestamp, last-seen timestamp, total reading count and total alert count.
 
----
+The system supports three sensor categories: Environmental, Power Consumption and Actuator.
 
-# 7. Configure User Secrets
+During registration, the MAC address is validated to ensure that it follows a valid format. Duplicate MAC addresses are also rejected to prevent multiple sensors from being registered with the same hardware identifier.
 
-The Smart-X API uses .NET User Secrets to store the encryption key used for encrypted sensor file uploads.
+Telemetry Ingestion
 
-This prevents the encryption key from being stored directly in `appsettings.json`.
+Telemetry is submitted to the Smart-X .NET Web API through the telemetry endpoint.
 
-From the `SmartX.API` directory, initialise User Secrets if required:
+The system supports three telemetry value types: float, integer and Boolean.
 
-```powershell
-dotnet user-secrets init
-```
+A generic C# class called TelemetryPacket<T> is used to represent strongly typed telemetry packets. This allows the application to work with different telemetry value types using generic type parameters.
 
-Set the encryption key:
+The implementation creates and processes telemetry packets for float, integer and Boolean values.
 
-```powershell
-dotnet user-secrets set "SmartX:EncryptionKey" "U2hhcmVkU21hcnRYRGV2ZWxvcG1lbnRLZXkxMjM0NTY="
-```
+Telemetry records contain information including the sensor identifier, metric, value type, value and timestamp. Numeric telemetry can additionally contain a numeric representation, anomaly status and alert information.
 
-The maximum file upload size remains configured in:
+Telemetry Simulation
 
-```text
-SmartX.API/appsettings.json
-```
+Smart-X contains a background telemetry simulation service that periodically generates demonstration telemetry for registered sensors.
 
-Example:
+Environmental sensors generate values such as temperature and moisture. Power Consumption sensors generate power readings, while Actuator sensors generate Boolean valve-state readings.
 
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*",
-  "SmartX": {
-    "MaxUploadSizeMB": 10
-  }
-}
-```
+The simulator allows the dashboard to demonstrate continuous telemetry ingestion and monitoring without requiring physical IoT hardware during development and testing.
 
-The encryption key should not be committed to GitHub.
+Anomaly Detection
 
----
+The Smart-X system provides dynamic anomaly detection for applicable telemetry values.
 
-# 8. Run the Backend API
+Temperature values are checked against configured thresholds, power consumption values are checked for unusually high readings, and moisture values are checked for unusually low readings.
 
-From the `SmartX.API` directory, run:
+When an anomaly is detected, the telemetry record is marked as anomalous, an alert message is generated and the corresponding sensor alert count is updated.
 
-```powershell
-dotnet run
-```
+The dashboard provides visual feedback when anomalies are detected.
 
-The API runs locally at:
+This functionality supports the engagement strategy selected during the research stage of Part 1: Real-Time Visual Telemetry Feedback with Dynamic Anomaly Alerts.
 
-```text
-http://localhost:5206
-```
+Sensor Status Monitoring
 
-Swagger is available at:
+The application tracks when telemetry was last received from each sensor.
 
-```text
-http://localhost:5206/swagger
-```
+Sensors that continue sending telemetry are displayed as Online.
 
-The API provides the backend services used by the React dashboard.
+If a sensor has not been seen within the configured timeout period, its status can change to Disconnected.
 
----
+This provides the operator with visual information about the availability of registered sensors.
 
-# 9. Frontend Setup
+C# Data Structures
 
-Open a second Developer PowerShell terminal.
+Part 1 demonstrates several required C# data-structure concepts.
 
-Navigate to the React client:
+The SensorCollection class manages registered sensors using a List<Sensor> internally. It provides functionality for adding, removing and locating sensors.
 
-```powershell
-cd SmartX\SmartX.Client
-```
+The TelemetryHistoryStore manages telemetry history using a list of telemetry records. It also uses jagged arrays for raw numeric telemetry batches before the optimised list-based history is used for ongoing access.
 
-Install the required npm packages:
+The implementation therefore demonstrates both the required sequential telemetry storage approach and the subsequent use of List<T> for efficient history management.
 
-```powershell
-npm install
-```
+Generic Programming
 
-Run the React development server:
+The application uses the generic class TelemetryPacket<T> to support different telemetry value types.
 
-```powershell
-npm run dev
-```
+The implementation supports:
 
-The frontend runs locally at:
-
-```text
-http://localhost:5173
-```
-
-Open the following address in a web browser:
-
-```text
-http://localhost:5173
-```
-
----
-
-# 10. Frontend Production Build
-
-The React application can be tested using a production build.
-
-From the `SmartX.Client` directory, run:
-
-```powershell
-npm run build
-```
-
-A successful build generates the `dist` directory.
-
-Example:
-
-```text
-dist/
-├── index.html
-└── assets/
-```
-
----
-
-# 11. API Endpoints
-
-The Smart-X API exposes the following main endpoints.
-
-## System
-
-```text
-GET /api/System/status
-```
-
-Returns the current Smart-X gateway status and identifies the active Part 1 module.
-
----
-
-## Sensor
-
-```text
-GET /api/Sensor
-GET /api/Sensor/{id}
-POST /api/Sensor
-```
-
-These endpoints are used to retrieve and register sensors.
-
----
-
-## Telemetry
-
-```text
-GET /api/Telemetry
-GET /api/Telemetry/statistics
-GET /api/Telemetry/sensor/{sensorId}
-POST /api/Telemetry
-```
-
-These endpoints are used to submit, retrieve and analyse telemetry data.
-
----
-
-## File Upload
-
-```text
-POST /api/File/sensor/{sensorId}
-```
-
-This endpoint allows media, configuration and log files to be attached to a specific sensor.
-
-Files are validated and encrypted before being stored.
-
----
-
-## Deployment Validation
-
-```text
-POST /api/Deployment/validate
-```
-
-This endpoint validates nested deployment configurations using recursive validation.
-
----
-
-## Demo
-
-```text
-POST /api/Demo/seed
-```
-
-This endpoint generates demonstration telemetry data.
-
----
-
-# 12. Sensor Registration
-
-Sensors can be registered through the Smart-X dashboard.
-
-Each sensor contains:
-
-* Unique ID
-* MAC address
-* Deployment location
-* Sensor category
-* Status
-* Registration timestamp
-* Last-seen timestamp
-* Total readings
-* Total alerts
-
-The supported sensor categories are:
-
-```text
-Environmental
-Power Consumption
-Actuator
-```
-
-MAC addresses are validated during registration.
-
-Duplicate MAC addresses are also rejected.
-
----
-
-# 13. Telemetry Ingestion
-
-The Smart-X system receives telemetry through the .NET Web API.
-
-The system supports three telemetry value types:
-
-```text
-Float
-Int
-Bool
-```
-
-The implementation uses the generic C# class:
-
-```csharp
-TelemetryPacket<T>
-```
-
-This allows strongly typed telemetry packets to be created for different value types.
-
-Examples include:
-
-```csharp
 TelemetryPacket<float>
 TelemetryPacket<int>
 TelemetryPacket<bool>
-```
 
-Telemetry records contain information such as:
+This allows telemetry packets to maintain their specific value types rather than using a single non-generic telemetry representation.
 
-* Sensor ID
-* Metric
-* Value
-* Value type
-* Timestamp
-* Numeric value where applicable
-* Anomaly status
-* Alert message
+Operator Overloading
 
----
+The Smart-X telemetry implementation includes operator overloading for numeric telemetry operations.
 
-# 14. Telemetry Simulation
+The overloaded operators support addition, subtraction, greater-than comparisons and less-than comparisons.
 
-The Smart-X API includes a background telemetry simulation service.
+These operations are used during telemetry aggregation, delta calculations, deviation calculations and threshold comparisons for anomaly detection.
 
-The simulator periodically generates telemetry for the registered sensors.
+Recursive Deployment Validation
 
-Examples include:
+Smart-X implements recursive validation of nested deployment configurations.
 
-### Environmental Sensor
+Deployment configurations are represented using DeploymentNode objects. Each deployment node can contain child nodes, allowing the configuration to represent a nested deployment structure.
 
-```text
-Temperature
-Moisture
-```
+The DeploymentValidator recursively checks each node in the deployment tree.
 
-### Power Consumption Sensor
+The validation process first checks the current node and then recursively checks each child node. A clear base case is included for a null node.
 
-```text
-Power
-```
+This allows the application to determine whether an entire nested deployment configuration is correctly configured.
 
-### Actuator
+Both valid and invalid nested deployment configurations were tested during Part 1.
 
-```text
-ValveState
-```
+Media and Log Upload
 
-This allows the dashboard to demonstrate continuous telemetry ingestion and monitoring.
+Smart-X provides functionality for attaching files to individual sensor profiles.
 
----
+The upload functionality uses multipart form data and supports configuration files, log files and supported image formats.
 
-# 15. Anomaly Detection
+The supported file types include JSON, TXT, LOG, CSV, XML, JPG, JPEG and PNG files.
 
-Smart-X performs anomaly detection on applicable telemetry values.
+The application validates uploaded files before they are stored. A maximum file size of 10 MB is enforced.
 
-Examples of anomaly rules include:
+Files are stored within sensor-specific directories so that uploaded files can be associated with the appropriate sensor.
 
-* Temperature above the configured threshold
-* Temperature below the configured threshold
-* High power consumption
-* Low moisture
+File Encryption
 
-When an anomaly is detected:
+Uploaded files are encrypted before they are stored.
 
-1. The telemetry record is marked as anomalous.
-2. An alert message is generated.
-3. The sensor alert count is updated.
-4. The dashboard displays the anomaly.
+The application uses AES encryption and generates a unique encrypted filename for uploaded files.
 
-The implementation supports the Part 1 engagement strategy selected during the research stage:
+The encryption key is stored using .NET User Secrets rather than being stored directly in appsettings.json.
 
-**Real-Time Visual Telemetry Feedback with Dynamic Anomaly Alerts**
+This helps prevent sensitive encryption configuration from being committed to the source-control repository.
 
----
+Security Features
 
-# 16. Sensor Status Monitoring
+The Part 1 implementation includes several security controls.
 
-The system tracks the last time telemetry was received from each sensor.
+HTTPS redirection is configured for API communication. CORS is configured to control communication between the React client and the backend API.
 
-Sensors that continue sending telemetry are displayed as:
+Input validation is performed when registering sensors and submitting files. MAC addresses are validated and duplicate sensor identifiers are prevented.
 
-```text
-● Online
-```
-
-If a sensor has not been seen within the configured timeout period, its status can change to:
-
-```text
-⚠ Disconnected
-```
-
-This provides visual feedback about sensor availability.
-
----
-
-# 17. Telemetry History and Data Structures
-
-Telemetry history is managed using:
-
-```csharp
-TelemetryHistoryStore
-```
-
-The implementation uses:
-
-```text
-List<TelemetryRecord>
-```
-
-for optimised telemetry history management.
-
-Jagged arrays are also used to store raw numeric telemetry batches.
-
-The system provides functionality for:
-
-* Adding telemetry records
-* Retrieving the latest telemetry
-* Retrieving sensor-specific history
-* Tracking telemetry record counts
-* Tracking raw telemetry batches
-
----
-
-# 18. Operator Overloading
-
-The Smart-X implementation includes operator overloading for numeric telemetry operations.
-
-The overloaded operators support:
-
-```text
-+
--
->
-<
-```
-
-These operators are used for telemetry operations including:
-
-* Aggregation
-* Delta calculations
-* Deviation calculations
-* Threshold comparisons
-* Anomaly detection
-
-This demonstrates the required use of C# operator overloading within the telemetry processing logic.
-
----
-
-# 19. Recursive Deployment Validation
-
-Smart-X implements recursive validation using:
-
-```text
-DeploymentValidator
-```
-
-Deployment configurations are represented as nested:
-
-```text
-DeploymentNode
-```
-
-objects.
-
-The validator checks whether the current node is configured and then recursively validates its child nodes.
-
-The validation process includes:
-
-1. Checking the current deployment node.
-2. Checking whether the node is configured.
-3. Recursively processing each child.
-4. Returning the final validation result.
-
-The recursive method includes a clear base case.
-
-This allows nested deployment/configuration trees to be validated.
-
----
-
-# 20. Media and Log Upload
-
-The Smart-X dashboard supports attaching files to specific sensor profiles.
-
-The upload uses multipart form data.
-
-Supported file extensions include:
-
-```text
-.json
-.txt
-.log
-.csv
-.xml
-.jpg
-.jpeg
-.png
-```
-
-The system applies file validation before storing uploaded files.
-
-The upload system also enforces a maximum file size of:
-
-```text
-10 MB
-```
-
-Files are stored in a sensor-specific directory.
-
----
-
-# 21. File Encryption
+Uploaded files are checked for valid extensions and maximum file size before processing.
 
 Uploaded files are encrypted before being stored.
 
-The encryption key is stored using .NET User Secrets rather than directly inside `appsettings.json`.
+The encryption key is maintained using .NET User Secrets instead of being placed directly into the application's configuration file.
 
-Encrypted files are stored using generated filenames rather than the original filename.
+React Dashboard
 
-The upload process therefore provides:
+The Smart-X React dashboard provides the main user interface for interacting with the system.
 
-* File type validation
-* File size validation
-* Sensor-specific storage
-* Encrypted storage
-* Randomised file naming
-* Protected encryption configuration
+The dashboard displays the Smart-X gateway status and clearly identifies the active Part 1 module.
 
----
+The dashboard provides sections for sensor registration, telemetry ingestion, sensor monitoring, telemetry statistics, anomaly alerts, media and log uploads and deployment validation.
 
-# 22. Security Features
+The interface also displays the three Smart-X system pillars. The Part 1 pillar is shown as active, while the Part 2 and final POE pillars are shown as disabled.
 
-The Smart-X Part 1 implementation includes several security measures.
+The frontend has been designed using responsive CSS so that the dashboard can adapt to different screen sizes.
 
-### HTTPS
+Swagger API Documentation
 
-The API is configured for HTTPS redirection.
+Swagger/OpenAPI is included in the Smart-X backend to provide interactive API documentation.
 
-### CORS
+After starting the API, Swagger can be accessed at:
 
-The API uses a configured CORS policy to control communication between the React client and API.
-
-### Input Validation
-
-User input is validated before processing.
-
-### Sensor Validation
-
-MAC addresses are validated and duplicate sensors are prevented.
-
-### File Validation
-
-Uploaded files are checked for:
-
-* Supported extensions
-* Maximum file size
-
-### Encrypted Storage
-
-Uploaded files are encrypted before being stored.
-
-### User Secrets
-
-Sensitive encryption configuration is stored using .NET User Secrets.
-
----
-
-# 23. React Dashboard
-
-The React dashboard provides the user interface for the Smart-X system.
-
-The dashboard includes:
-
-* Smart-X gateway status
-* Part 1 active module indicator
-* Disabled future system pillars
-* Sensor overview
-* Sensor registration
-* Telemetry submission
-* Telemetry statistics
-* Anomaly alerts
-* Sensor status
-* Media/log uploads
-* Deployment validation
-
-The interface also uses responsive CSS to support different screen sizes.
-
----
-
-# 24. Swagger / OpenAPI
-
-Swagger is included to provide interactive API documentation.
-
-After starting the API, open:
-
-```text
 http://localhost:5206/swagger
-```
 
-Swagger allows the available Smart-X API endpoints to be viewed and tested.
+Swagger can be used to view and test the available API endpoints, including sensor registration, telemetry submission and retrieval, file uploads, deployment validation and system status.
 
-It can be used to test:
+Installation Requirements
 
-* Sensor registration
-* Sensor retrieval
-* Telemetry submission
-* Telemetry retrieval
-* Telemetry statistics
-* File upload
-* Deployment validation
-* System status
-* Demo telemetry generation
+The following software is required to run the Smart-X application:
 
----
+.NET 10 SDK
+Node.js
+npm
+Visual Studio with .NET 10 support
+Git
 
-# 25. Evidence
+The installed .NET version can be checked using dotnet --version.
 
-The `Evidence` folder contains screenshots demonstrating the implementation and testing of the Part 1 functionality.
+The installed Node.js version can be checked using node --version.
 
-The evidence includes:
+The installed npm version can be checked using npm --version.
 
-```text
-Evidence/
-│
-├── Evidence_01_Startup_Three_Pillars.png
-├── Evidence_02_Sensor_Registration.png
-├── Evidence_03_Telemetry_Float_Anomaly.png
-├── Evidence_04_Integer_Telemetry.png
-├── Evidence_05_Boolean_Telemetry.png
-├── Evidence_06_Recursive_Validation_Valid.png
-├── Evidence_07_Recursive_Validation_Invalid.png
-├── Evidence_08_Media_Upload_Encryption.png
-├── Evidence_09_Swagger_API_Endpoints.png
-└── Evidence_10_System_Status.png
-```
+Running the Backend
 
-These screenshots provide practical evidence of the major Part 1 implementation features.
+Open Developer PowerShell and navigate to the SmartX.API directory.
 
----
+Run dotnet restore to restore the required .NET dependencies.
 
-# 26. Build Verification
+Run dotnet build to build the API.
 
-The Smart-X API has been tested using:
+Run dotnet run to start the backend application.
 
-```powershell
-dotnet clean
-dotnet build
-```
+The API is available locally at:
 
-The API successfully completed the clean and build process.
-
-The React client has been tested using:
-
-```powershell
-npm run build
-```
-
-The React production build successfully completed and generated the `dist` directory.
-
----
-
-# 27. Running the Complete Application
-
-Two terminals are required.
-
-## Terminal 1 – Backend API
-
-Navigate to:
-
-```powershell
-cd SmartX\SmartX.API
-```
-
-Run:
-
-```powershell
-dotnet run
-```
-
-API:
-
-```text
 http://localhost:5206
-```
 
-Swagger:
+Swagger is available at:
 
-```text
 http://localhost:5206/swagger
-```
 
----
+Running the Frontend
 
-## Terminal 2 – React Client
+Open a second Developer PowerShell terminal and navigate to the SmartX.Client directory.
 
-Navigate to:
+Run npm install to install the required frontend dependencies.
 
-```powershell
-cd SmartX\SmartX.Client
-```
+Run npm run dev to start the Vite development server.
 
-Run:
+The React application is available at:
 
-```powershell
-npm run dev
-```
-
-Client:
-
-```text
 http://localhost:5173
-```
 
-Open:
+Open this address in a web browser to access the Smart-X dashboard.
 
-```text
-http://localhost:5173
-```
+Production Build
 
-in a web browser.
+The React application can be tested using a production build.
 
----
+From the SmartX.Client directory, run npm run build.
 
-# 28. Part 1 Completion
+A successful build generates the dist directory containing the production frontend files.
 
-Part 1 establishes the Sensor Data Ingestion and Telemetry foundation of the Smart-X IoT Mesh Ecosystem.
+The .NET API can be cleaned and rebuilt using dotnet clean followed by dotnet build.
 
-The completed implementation provides:
+The final Part 1 implementation was successfully tested using these build commands.
 
-* A staged three-pillar Smart-X interface
-* Sensor registration
-* Sensor categorisation
-* Telemetry ingestion
-* Generic telemetry processing
-* Float, integer and Boolean telemetry
-* Telemetry history
-* Operator overloading
-* Jagged arrays
-* List-based data management
-* Recursive deployment validation
-* Dynamic anomaly detection
-* Sensor status monitoring
-* Multipart media/log upload
-* Encrypted file storage
-* Swagger API documentation
-* Responsive React dashboard
-* Security controls
+Evidence
 
-The following functionality remains intentionally disabled until the relevant POE phases:
+The Evidence folder contains screenshots demonstrating the implementation and testing of the major Part 1 functionality.
 
-```text
-Part 2:
-Real-Time Command Stream & History
+The evidence includes the Smart-X startup interface and three system pillars, sensor registration, float telemetry and anomaly detection, integer telemetry, Boolean telemetry, valid recursive deployment validation, invalid recursive deployment validation, media upload and encryption, Swagger API endpoints and system status.
 
-Final POE:
-Network Topology & Mesh Routing
-```
+These screenshots provide practical evidence of the functionality implemented for Part 1.
 
-The current Part 1 implementation therefore provides the required foundation for the later Smart-X IoT Mesh Ecosystem development phases.
+Part 1 Scope
 
----
+The completed Part 1 implementation focuses specifically on Sensor Data Ingestion and Telemetry.
 
-# Author
+The completed functionality includes sensor registration, sensor categorisation, telemetry ingestion, generic telemetry processing, float/integer/Boolean telemetry, telemetry history, operator overloading, jagged arrays, list-based data management, recursive deployment validation, anomaly detection, sensor status monitoring, multipart media and log uploads, encrypted file storage, Swagger API documentation and a responsive React dashboard.
 
-**Programming 3B – Advanced Application Development**
+The Real-Time Command Stream and History functionality is intentionally reserved for Part 2.
 
-**Smart-X IoT Mesh Ecosystem**
+The Network Topology and Mesh Routing functionality is intentionally reserved for the final POE phase.
 
-**Part 1 – Sensor Data Ingestion and Telemetry**
+This ensures that the current implementation remains within the required Part 1 scope while establishing the foundation for the later Smart-X development phases.
 
-````
+Conclusion
 
-### One important thing before you commit it
+Smart-X Part 1 provides the foundation for the IoT Mesh Ecosystem by implementing the required Sensor Data Ingestion and Telemetry functionality.
 
-At the top of the README, replace:
+The combination of a React frontend and .NET Web API provides a functional client-server architecture for interacting with IoT sensor data.
 
-```text
-<YOUR-GITHUB-REPOSITORY-URL>
-````
+The implementation demonstrates sensor management, generic telemetry processing, anomaly detection, telemetry history, operator overloading, recursive validation, secure file handling and responsive dashboard functionality.
 
-with your **actual GitHub repository URL**.
+The application has been built and tested successfully for both the backend and frontend components.
 
-Everything else can be pasted as-is.
+Programming 3B – Advanced Application Development
 
-After you save it, **don't commit yet**. The next thing we'll do is check the README and your project structure together, then we can move toward the final Part 1 submission audit.
+Smart-X IoT Mesh Ecosystem
+
+Part 1 – Sensor Data Ingestion and Telemetry
