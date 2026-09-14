@@ -1,3 +1,8 @@
+/* =========================================================
+   SMART-X IoT MESH ECOSYSTEM
+   Main Application Styling
+   ========================================================= */
+
 * {
     box-sizing: border-box;
 }
@@ -18,7 +23,10 @@ button {
     background: radial-gradient( circle at top right, rgba(18, 164, 208, 0.12), transparent 35% ), #07131d;
 }
 
-/* HEADER */
+
+/* =========================================================
+   HEADER
+   ========================================================= */
 
 .topbar {
     min-height: 82px;
@@ -73,7 +81,10 @@ button {
     box-shadow: 0 0 12px rgba(72,217,145,0.8);
 }
 
-/* DASHBOARD */
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
 
 .dashboard {
     width: min(1500px, 90%);
@@ -120,7 +131,128 @@ button {
         background: rgba(18,164,208,0.18);
     }
 
-/* ERROR */
+
+/* =========================================================
+   SYSTEM PILLARS
+   Part 1 / Part 2 / Final PoE
+   ========================================================= */
+
+.system-pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.pillar-card {
+    position: relative;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 22px;
+    min-height: 175px;
+    border-radius: 12px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(10,28,40,0.82);
+    box-sizing: border-box;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+    .pillar-card:hover {
+        transform: translateY(-2px);
+    }
+
+
+/* ACTIVE PART 1 */
+
+.pillar-active {
+    border-color: #12a4d0;
+    background: linear-gradient( 135deg, rgba(18,164,208,0.10), rgba(10,28,40,0.90) );
+    box-shadow: 0 0 20px rgba(18,164,208,0.10);
+}
+
+    .pillar-active:hover {
+        border-color: #55c9ed;
+    }
+
+
+/* DISABLED FUTURE PILLARS */
+
+.pillar-disabled {
+    opacity: 0.55;
+    background: rgba(8,22,31,0.65);
+    border-color: rgba(255,255,255,0.08);
+    cursor: not-allowed;
+}
+
+    .pillar-disabled:hover {
+        transform: none;
+    }
+
+
+/* PILLAR ICON */
+
+.pillar-icon {
+    width: 46px;
+    min-width: 46px;
+    height: 46px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: rgba(18,164,208,0.12);
+    color: #12a4d0;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pillar-disabled .pillar-icon {
+    background: rgba(255,255,255,0.05);
+    color: #7b8990;
+}
+
+
+/* PILLAR CONTENT */
+
+.pillar-content {
+    flex: 1;
+    min-width: 0;
+}
+
+    .pillar-content h2 {
+        margin: 8px 0 8px;
+        font-size: 18px;
+        line-height: 1.35;
+    }
+
+    .pillar-content p {
+        margin: 0;
+        color: #7f939e;
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+
+/* PILLAR STATUS */
+
+.pillar-status {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+    .pillar-status.active {
+        color: #62e3a2;
+    }
+
+    .pillar-status.disabled {
+        color: #7d8a91;
+    }
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
 
 .error-banner {
     padding: 14px 18px;
@@ -131,7 +263,10 @@ button {
     color: #ff9b9b;
 }
 
-/* STATISTICS */
+
+/* =========================================================
+   STATISTICS
+   ========================================================= */
 
 .stats-grid {
     display: grid;
@@ -171,7 +306,10 @@ button {
     color: #fca637;
 }
 
-/* PANELS */
+
+/* =========================================================
+   PANELS
+   ========================================================= */
 
 .panel {
     border: 1px solid rgba(255,255,255,0.08);
@@ -217,7 +355,10 @@ button {
     font-size: 12px;
 }
 
-/* TABLE */
+
+/* =========================================================
+   TABLE
+   ========================================================= */
 
 .table-wrapper {
     overflow-x: auto;
@@ -266,7 +407,10 @@ td {
         color: #fca637;
     }
 
-/* ALERTS */
+
+/* =========================================================
+   ALERTS
+   ========================================================= */
 
 .alerts-list {
     max-height: 460px;
@@ -326,7 +470,10 @@ td {
         font-size: 12px;
     }
 
-/* SENSOR CARDS */
+
+/* =========================================================
+   SENSOR CARDS
+   ========================================================= */
 
 .sensor-grid {
     padding: 20px;
@@ -359,10 +506,20 @@ td {
     font-size: 20px;
 }
 
+
+/* SENSOR STATUS */
+
 .online {
     color: #62e3a2;
     font-size: 11px;
 }
+
+.offline {
+    color: #ff7777;
+    font-size: 11px;
+    font-weight: 700;
+}
+
 
 .sensor-card h3 {
     margin: 17px 0 5px;
@@ -401,7 +558,10 @@ td {
         font-size: 12px;
     }
 
-/* LOADING */
+
+/* =========================================================
+   LOADING
+   ========================================================= */
 
 .loading-screen {
     min-height: 100vh;
@@ -435,7 +595,10 @@ td {
     }
 }
 
-/* FOOTER */
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
 
 footer {
     padding: 25px 5px;
@@ -445,56 +608,10 @@ footer {
     font-size: 11px;
 }
 
-/* RESPONSIVE */
 
-@media (max-width: 1000px) {
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .content-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .sensor-grid {
-        grid-template-columns: 1fr;
-    }
-}
-
-@media (max-width: 650px) {
-    .topbar {
-        padding: 15px 5%;
-    }
-
-    .gateway-status {
-        display: none;
-    }
-
-    .dashboard {
-        width: 92%;
-        padding-top: 25px;
-    }
-
-    .page-heading {
-        align-items: flex-start;
-        gap: 15px;
-        flex-direction: column;
-    }
-
-    .stats-grid {
-        grid-template-columns: 1fr;
-    }
-
-    .refresh-button {
-        width: 100%;
-    }
-
-    footer {
-        flex-direction: column;
-        gap: 8px;
-    }
-}
-/* TELEMETRY INGESTION */
+/* =========================================================
+   TELEMETRY INGESTION
+   ========================================================= */
 
 .ingestion-panel {
     margin-bottom: 18px;
@@ -590,7 +707,13 @@ footer {
     color: #fca637;
 }
 
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
+
 @media (max-width: 1100px) {
+
     .ingestion-form {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -600,12 +723,112 @@ footer {
     }
 }
 
-@media (max-width: 650px) {
-    .ingestion-form {
+@media (max-width: 1000px) {
+
+    .system-pillars {
+        grid-template-columns: 1fr;
+        gap: 14px;
+    }
+
+    .pillar-card {
+        min-height: auto;
+    }
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .content-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .sensor-grid {
         grid-template-columns: 1fr;
     }
 }
+
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
 @media (max-width: 650px) {
+
+    .topbar {
+        padding: 15px 5%;
+    }
+
+    .gateway-status {
+        display: none;
+    }
+
+    .dashboard {
+        width: 92%;
+        padding-top: 25px;
+    }
+
+    .page-heading {
+        align-items: flex-start;
+        gap: 15px;
+        flex-direction: column;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .refresh-button {
+        width: 100%;
+    }
+
+    footer {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    /* MOBILE SYSTEM PILLARS */
+
+    .system-pillars {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+
+    .pillar-card {
+        padding: 16px;
+        gap: 12px;
+        min-height: auto;
+    }
+
+    .pillar-icon {
+        width: 38px;
+        min-width: 38px;
+        height: 38px;
+        font-size: 17px;
+    }
+
+    .pillar-content h2 {
+        font-size: 15px;
+        margin-top: 6px;
+    }
+
+    .pillar-content p {
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    .pillar-status {
+        font-size: 9px;
+    }
+
+    /* MOBILE TELEMETRY FORM */
+
+    .ingestion-form {
+        grid-template-columns: 1fr;
+    }
+
+    /* MOBILE TELEMETRY TABLE */
+
     .table-wrapper {
         width: 100%;
         overflow-x: auto;

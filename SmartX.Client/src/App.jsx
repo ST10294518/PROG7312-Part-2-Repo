@@ -153,11 +153,9 @@ function App() {
                 `${API_URL}/api/Telemetry`,
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json"
                     },
-
                     body: JSON.stringify({
                         sensorId: selectedSensor,
                         metric: metric.trim(),
@@ -177,11 +175,9 @@ function App() {
             }
 
             setIngestMessage(data.message);
-
             setValue("");
 
             await loadDashboard();
-
         } catch (err) {
             setIngestError(
                 err.message ||
@@ -220,6 +216,7 @@ function App() {
         ];
 
         const fileName = uploadFile.name.toLowerCase();
+
         const isAllowed = allowedExtensions.some(
             extension => fileName.endsWith(extension)
         );
@@ -254,24 +251,25 @@ function App() {
 
             if (!response.ok) {
                 throw new Error(
-                    data.message || "File upload failed."
+                    data.message ||
+                    "File upload failed."
                 );
             }
 
             setUploadMessage(
-                data.message || "File uploaded successfully."
+                data.message ||
+                "File uploaded successfully."
             );
 
             setUploadFile(null);
 
             event.target.reset();
-        }
-        catch (err) {
+        } catch (err) {
             setUploadError(
-                err.message || "Unable to upload file."
+                err.message ||
+                "Unable to upload file."
             );
-        }
-        finally {
+        } finally {
             setUploading(false);
         }
     };
@@ -301,7 +299,6 @@ function App() {
             return;
         }
 
-        // Basic MAC address validation.
         const macPattern =
             /^([0-9A-Fa-f]{2}[:-]){5}[0-9A-Fa-f]{2}$/;
 
@@ -319,11 +316,9 @@ function App() {
                 `${API_URL}/api/Sensor`,
                 {
                     method: "POST",
-
                     headers: {
                         "Content-Type": "application/json"
                     },
-
                     body: JSON.stringify({
                         macAddress: macAddress.trim(),
                         deploymentLocation:
@@ -350,7 +345,6 @@ function App() {
             setDeploymentLocation("");
 
             await loadDashboard();
-
         } catch (err) {
             setRegistrationError(
                 err.message ||
@@ -468,6 +462,90 @@ function App() {
 
             {/* MAIN CONTENT */}
             <main className="dashboard">
+
+                {/* SYSTEM PILLARS */}
+                <section className="system-pillars">
+
+                    {/* PART 1 — ACTIVE */}
+                    <div className="pillar-card pillar-active">
+
+                        <div className="pillar-icon">
+                            ◉
+                        </div>
+
+                        <div className="pillar-content">
+
+                            <span className="pillar-status active">
+                                ✓ ACTIVE — PART 1
+                            </span>
+
+                            <h2>
+                                Sensor Data Ingestion & Telemetry
+                            </h2>
+
+                            <p>
+                                Live sensor registration, telemetry
+                                ingestion, monitoring and anomaly detection.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {/* PART 2 — DISABLED */}
+                    <div className="pillar-card pillar-disabled">
+
+                        <div className="pillar-icon">
+                            🔒
+                        </div>
+
+                        <div className="pillar-content">
+
+                            <span className="pillar-status disabled">
+                                🔒 COMING IN PART 2
+                            </span>
+
+                            <h2>
+                                Real-Time Command Stream & History
+                            </h2>
+
+                            <p>
+                                Command processing and command history
+                                will be implemented in Part 2.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    {/* FINAL POE — DISABLED */}
+                    <div className="pillar-card pillar-disabled">
+
+                        <div className="pillar-icon">
+                            🔒
+                        </div>
+
+                        <div className="pillar-content">
+
+                            <span className="pillar-status disabled">
+                                🔒 COMING IN FINAL POE
+                            </span>
+
+                            <h2>
+                                Network Topology & Mesh Routing
+                            </h2>
+
+                            <p>
+                                Mesh topology, routing and network
+                                optimisation will be implemented
+                                in the final PoE phase.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </section>
 
                 {error && (
                     <div className="error-banner">
@@ -912,7 +990,9 @@ function App() {
                             <select
                                 value={uploadSensorId}
                                 onChange={(event) =>
-                                    setUploadSensorId(event.target.value)
+                                    setUploadSensorId(
+                                        event.target.value
+                                    )
                                 }
                             >
 
@@ -1215,8 +1295,17 @@ function App() {
 
                                     </div>
 
-                                    <span className="online">
-                                        ● Online
+                                    {/* ACTUAL SENSOR STATUS */}
+                                    <span
+                                        className={
+                                            sensor.status === "Online"
+                                                ? "online"
+                                                : "offline"
+                                        }
+                                    >
+                                        {sensor.status === "Online"
+                                            ? "● Online"
+                                            : "⚠ Disconnected"}
                                     </span>
 
                                 </div>
