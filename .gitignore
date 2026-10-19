@@ -3,3 +3,9 @@ obj/
 .vs/
 *.user
 node_modules/
+
+# Runtime sensor attachments
+/SmartX.API/Uploads/
+
+# Frontend build output
+/SmartX.Client/dist/
