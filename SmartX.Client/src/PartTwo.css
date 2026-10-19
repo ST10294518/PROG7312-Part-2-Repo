@@ -80,3 +80,87 @@
     outline: 2px solid #66e6a6;
     outline-offset: 4px;
 }
+
+.sx-panel {
+    margin-top: 28px;
+    padding: 24px;
+    border: 1px solid #254252;
+    border-radius: 12px;
+    background: #0a1d2a;
+}
+.sx-panel h2, .sx-panel h3 {
+    color: #e8f4f8;
+    letter-spacing: normal;
+}
+.sx-panel h2 { margin: 0 0 12px; font-size: 24px; }
+.sx-panel h3 { margin: 0 0 8px; font-size: 18px; }
+.sx-filters {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    margin: 22px 0;
+}
+.sx-filters label { color: #b8cbd6; font-size: 13px; }
+.sx-panel input, .sx-panel select {
+    display: block;
+    width: 100%;
+    margin-top: 7px;
+    padding: 11px;
+    background: #07131d;
+    color: #e8f4f8;
+    border: 1px solid #365362;
+    border-radius: 7px;
+    font: inherit;
+}
+.sx-device-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+}
+.sx-device {
+    padding: 18px;
+    border: 1px solid #254252;
+    border-radius: 10px;
+    background: #0c2231;
+    overflow-wrap: anywhere;
+}
+.sx-device p { margin: 8px 0; }
+.sx-panel button {
+    padding: 10px 14px;
+    color: #e8f4f8;
+    background: #12384b;
+    border: 1px solid #12a4d0;
+    border-radius: 7px;
+    cursor: pointer;
+    font: inherit;
+    font-size: 13px;
+}
+.sx-panel button[aria-pressed="true"] { border-color: #66e6a6; }
+.sx-panel button:disabled { opacity: .55; cursor: wait; }
+.sx-panel button:focus-visible,
+.sx-panel input:focus-visible,
+.sx-panel select:focus-visible {
+    outline: 2px solid #66e6a6;
+    outline-offset: 3px;
+}
+.sx-online, .sx-feedback { color: #66e6a6; }
+.sx-warning { color: #ffd38a; }
+.sx-feedback { min-height: 22px; font-size: 13px; }
+.sx-inspection { margin-top: 24px; padding-top: 20px; border-top: 1px solid #254252; }
+.sx-inspection > p { overflow-wrap: anywhere; }
+.sx-empty { padding: 18px 0; color: #a9bfcb; }
+.sx-alert-list { list-style: none; padding: 0; }
+.sx-alert-list li {
+    padding: 14px;
+    margin-top: 10px;
+    background: #30251b;
+    border-left: 3px solid #ffd38a;
+    border-radius: 6px;
+    overflow-wrap: anywhere;
+}
+.sx-alert-list span { display: block; margin-top: 6px; }
+@media (max-width: 800px) {
+    .sx-filters { grid-template-columns: 1fr; }
+    .sx-panel { padding: 18px; }
+}

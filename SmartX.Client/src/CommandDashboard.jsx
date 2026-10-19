@@ -1,4 +1,5 @@
-﻿import { useEffect, useState } from "react";
+﻿import DeviceOperations from "./DeviceOperations";
+import { useEffect, useState } from "react";
 
 const API = "http://localhost:5206/api";
 
@@ -82,6 +83,8 @@ export default function CommandDashboard() {
                     </p>
                 </>
             )}
+            <DeviceOperations />
         </main>
     );
 }
+
