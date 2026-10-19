@@ -1,4 +1,5 @@
-﻿import ActuatorControls from "./ActuatorControls";
+﻿import SuggestedActions from "./SuggestedActions";
+import ActuatorControls from "./ActuatorControls";
 import DeviceOperations from "./DeviceOperations";
 import { useEffect, useState } from "react";
 
@@ -85,9 +86,11 @@ export default function CommandDashboard() {
                 </>
             )}
             <DeviceOperations />
+            <SuggestedActions />
             <ActuatorControls />
         </main>
     );
 }
+
 
 

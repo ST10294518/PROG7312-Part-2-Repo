@@ -201,3 +201,29 @@
 }
 .sx-table td:first-child { white-space: nowrap; }
 .sx-table tbody tr:hover { background: #102b3b; }
+
+.sx-suggestion-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    gap: 16px;
+}
+.sx-suggestion {
+    padding: 20px;
+    background: #102b31;
+    border: 1px solid #327369;
+    border-radius: 10px;
+    overflow-wrap: anywhere;
+}
+.sx-suggestion .sx-eyebrow {
+    color: #66e6a6;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+}
+.sx-suggestion p { margin-bottom: 12px; }
+.sx-explanation {
+    padding: 12px;
+    background: #0a1d2a;
+    border-radius: 6px;
+    line-height: 1.6;
+}
