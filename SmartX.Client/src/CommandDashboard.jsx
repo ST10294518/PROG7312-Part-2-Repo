@@ -1,4 +1,5 @@
-﻿import SuggestedActions from "./SuggestedActions";
+﻿import TelemetryTimeline from "./TelemetryTimeline";
+import SuggestedActions from "./SuggestedActions";
 import ActuatorControls from "./ActuatorControls";
 import DeviceOperations from "./DeviceOperations";
 import { useEffect, useState } from "react";
@@ -88,9 +89,11 @@ export default function CommandDashboard() {
             <DeviceOperations />
             <SuggestedActions />
             <ActuatorControls />
+            <TelemetryTimeline />
         </main>
     );
 }
+
 
 
 

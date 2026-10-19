@@ -227,3 +227,17 @@
     border-radius: 6px;
     line-height: 1.6;
 }
+
+.sx-history-filters { grid-template-columns: 1fr 1fr; }
+.sx-timeline {
+    margin: 20px 0;
+    padding: 14px;
+    background: #07131d;
+    border: 1px solid #254252;
+    border-radius: 8px;
+}
+.sx-timeline svg { display: block; width: 100%; height: auto; }
+.sx-timeline figcaption { margin-top: 10px; line-height: 1.5; }
+@media (max-width: 800px) {
+    .sx-history-filters { grid-template-columns: 1fr; }
+}
