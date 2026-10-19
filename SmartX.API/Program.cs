@@ -24,6 +24,9 @@ builder.Services.AddSingleton<SensorService>();
 builder.Services.AddSingleton<TelemetryService>();
 builder.Services.AddSingleton<FileService>();
 builder.Services.AddSingleton<CommandService>();
+builder.Services.AddSingleton<ActionLearningService>(
+    _ => new ActionLearningService());
+builder.Services.AddSingleton<RecommendationService>();
 
 builder.Services.AddSingleton<ActiveAlertService>();
 builder.Services.AddHostedService<DeviceConnectionMonitor>();
@@ -63,6 +66,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 
 

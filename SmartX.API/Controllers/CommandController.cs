@@ -15,10 +15,17 @@ public sealed class ManualCommandRequest
 public class CommandController : ControllerBase
 {
     private readonly CommandService _commands;
+    private readonly ActionLearningService _learning;
+    private readonly ActiveAlertService _alerts;
 
-    public CommandController(CommandService commands)
+    public CommandController(
+        CommandService commands,
+        ActionLearningService learning,
+        ActiveAlertService alerts)
     {
         _commands = commands;
+        _learning = learning;
+        _alerts = alerts;
     }
 
     [HttpGet("state/{sensorId:guid}")]
@@ -60,6 +67,9 @@ public class CommandController : ControllerBase
         if (!result.Success)
             return BadRequest(result);
 
+        if (result.Command is not null)
+            _learning.RecordCommand(result.Command, _alerts.GetActive());
+
         return Ok(result);
     }
 
@@ -74,3 +84,4 @@ public class CommandController : ControllerBase
         return Ok(result);
     }
 }
+
