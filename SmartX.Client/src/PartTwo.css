@@ -1,0 +1,82 @@
+﻿.sx-shell {
+    background: #07131d;
+    color: #e8f4f8;
+    min-height: 100vh;
+    text-align: left;
+}
+.sx-shell [hidden] { display: none !important; }
+.sx-nav {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    padding: 18px 5%;
+    background: #091b28;
+    border-bottom: 1px solid #254252;
+}
+.sx-nav strong { margin-right: 12px; letter-spacing: 1px; }
+.sx-nav strong span { color: #55c9ed; font-size: 12px; }
+.sx-nav a {
+    color: #a9bfcb;
+    padding: 10px 14px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    text-decoration: none;
+}
+.sx-nav a[aria-current="page"] {
+    color: #e8f4f8;
+    background: #12384b;
+    border-color: #12a4d0;
+}
+.sx-nav a:focus-visible { outline: 2px solid #66e6a6; }
+.sx-future { color: #8ba1ae; font-size: 12px; padding: 10px; }
+.sx-command-page { width: min(1400px, 90%); margin: auto; padding: 36px 0; }
+.sx-page-heading { margin-bottom: 28px; }
+.sx-page-heading h1 {
+    color: #e8f4f8;
+    font-size: clamp(25px, 3vw, 38px);
+    margin: 10px 0;
+    letter-spacing: normal;
+}
+.sx-page-heading p { color: #a9bfcb; }
+.sx-page-heading .sx-eyebrow {
+    color: #55c9ed;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+}
+.sx-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px;
+    margin-bottom: 18px;
+}
+.sx-card {
+    background: #0c2231;
+    border: 1px solid #254252;
+    border-radius: 12px;
+    padding: 20px;
+}
+.sx-card span { display: block; color: #a9bfcb; font-size: 13px; }
+.sx-card strong { display: block; margin-top: 8px; font-size: 30px; color: #66e6a6; }
+.sx-muted { color: #a9bfcb; font-size: 13px; }
+.sx-error {
+    color: #ffd0d0;
+    background: #421e28;
+    padding: 14px;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+.sx-loading { padding: 30px 5%; color: #a9bfcb; }
+
+.sx-pillar-link {
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+}
+.sx-pillar-link:hover {
+    border-color: #66e6a6;
+}
+.sx-pillar-link:focus-visible {
+    outline: 2px solid #66e6a6;
+    outline-offset: 4px;
+}

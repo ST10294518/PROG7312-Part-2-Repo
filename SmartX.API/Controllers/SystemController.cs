@@ -13,8 +13,13 @@ public class SystemController : ControllerBase
         {
             name = "Smart-X Gateway",
             status = "Online",
-            version = "Part 1",
+            version = "Part 2",
             activeModule = "Sensor Data Ingestion and Telemetry",
+            activeModules = new[]
+            {
+                "Sensor Data Ingestion and Telemetry",
+                "Real-Time Command Stream and History"
+            },
             apiTime = DateTime.UtcNow
         });
     }
