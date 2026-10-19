@@ -4,90 +4,139 @@ namespace SmartX.API.DataStructures;
 
 public class TelemetryHistoryStore
 {
-    // Optimized telemetry history using List<T>.
     private readonly List<TelemetryRecord> _records = new();
-
-    // Raw historical telemetry represented as jagged arrays.
     private readonly List<double[][]> _rawBatches = new();
 
-    public IReadOnlyList<TelemetryRecord> Records => _records;
+    private readonly SortedDictionary<DateTime, List<TelemetryRecord>>
+        _timeline = new();
 
-    // ============================================================
-    // ADD TELEMETRY RECORD
-    // ============================================================
+    private readonly Dictionary<
+        string,
+        SortedDictionary<DateTime, List<TelemetryRecord>>>
+        _sensorTimelines = new(StringComparer.OrdinalIgnoreCase);
 
-    public void Add(TelemetryRecord record)
+    private readonly object _sync = new();
+
+    public IReadOnlyList<TelemetryRecord> Records
     {
-        _records.Add(record);
-
-        /*
-         * Numeric telemetry is also represented as a jagged array
-         * batch before being retained in the optimized List<T>
-         * collection.
-         *
-         * Each batch can contain a different number of rows,
-         * demonstrating the flexible memory layout of jagged arrays.
-         */
-        if (record.IsNumeric)
+        get
         {
-            double[][] rawBatch =
+            lock (_sync)
             {
-                new[]
-                {
-                    record.NumericValue
-                }
-            };
-
-            AddRawBatch(rawBatch);
+                return _records.ToList();
+            }
         }
     }
 
-    // ============================================================
-    // ADD RAW JAGGED ARRAY BATCH
-    // ============================================================
+    public void Add(TelemetryRecord record)
+    {
+        ArgumentNullException.ThrowIfNull(record);
+
+        lock (_sync)
+        {
+            if (record.IsNumeric)
+            {
+                double[][] rawBatch =
+                {
+                    new[] { record.NumericValue }
+                };
+
+                _rawBatches.Add(rawBatch);
+            }
+
+            _records.Add(record);
+            AddToTimeline(_timeline, record);
+
+            if (!_sensorTimelines.TryGetValue(
+                record.SensorId, out var sensorTimeline))
+            {
+                sensorTimeline =
+                    new SortedDictionary<DateTime, List<TelemetryRecord>>();
+
+                _sensorTimelines.Add(record.SensorId, sensorTimeline);
+            }
+
+            AddToTimeline(sensorTimeline, record);
+        }
+    }
+
+    private static void AddToTimeline(
+        SortedDictionary<DateTime, List<TelemetryRecord>> timeline,
+        TelemetryRecord record)
+    {
+        if (!timeline.TryGetValue(record.Timestamp, out var bucket))
+        {
+            bucket = new List<TelemetryRecord>();
+            timeline.Add(record.Timestamp, bucket);
+        }
+
+        bucket.Add(record);
+    }
 
     public void AddRawBatch(double[][] batch)
     {
-        _rawBatches.Add(batch);
-    }
+        ArgumentNullException.ThrowIfNull(batch);
 
-    // ============================================================
-    // LATEST TELEMETRY
-    // ============================================================
+        lock (_sync)
+        {
+            _rawBatches.Add(batch);
+        }
+    }
 
     public List<TelemetryRecord> GetLatest(int count)
     {
-        return _records
-            .OrderByDescending(x => x.Timestamp)
-            .Take(count)
-            .ToList();
+        lock (_sync)
+        {
+            return _timeline
+                .Reverse()
+                .SelectMany(entry => entry.Value.AsEnumerable().Reverse())
+                .Take(Math.Max(0, count))
+                .ToList();
+        }
     }
-
-    // ============================================================
-    // SENSOR TELEMETRY HISTORY
-    // ============================================================
 
     public List<TelemetryRecord> GetSensorHistory(
         string sensorId,
         int count = 50)
     {
-        return _records
-            .Where(x => x.SensorId == sensorId)
-            .OrderByDescending(x => x.Timestamp)
-            .Take(count)
-            .OrderBy(x => x.Timestamp)
-            .ToList();
+        lock (_sync)
+        {
+            if (string.IsNullOrWhiteSpace(sensorId) ||
+                !_sensorTimelines.TryGetValue(sensorId, out var timeline))
+            {
+                return new List<TelemetryRecord>();
+            }
+
+            var latest = timeline
+                .Reverse()
+                .SelectMany(entry => entry.Value.AsEnumerable().Reverse())
+                .Take(Math.Max(0, count))
+                .ToList();
+
+            latest.Reverse();
+            return latest;
+        }
     }
 
-    // ============================================================
-    // COLLECTION COUNT
-    // ============================================================
+    public int Count
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _records.Count;
+            }
+        }
+    }
 
-    public int Count => _records.Count;
-
-    // ============================================================
-    // RAW BATCH COUNT
-    // ============================================================
-
-    public int RawBatchCount => _rawBatches.Count;
+    public int RawBatchCount
+    {
+        get
+        {
+            lock (_sync)
+            {
+                return _rawBatches.Count;
+            }
+        }
+    }
 }
