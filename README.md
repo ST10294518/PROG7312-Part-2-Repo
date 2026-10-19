@@ -165,7 +165,7 @@ These are simulation thresholds selected for this implementation.
 
 C# data structure files are under `SmartX.API/DataStructures` and service files under `SmartX.API/Services`.
 
-Dictionary lookups are average O(1). Standard queue and stack operations are amortised O(1). Priority queue operations are O(log n). Sorted-dictionary insertions are O(log n) in the number of timestamp keys. Current history retrieval reverses enumeration of the sorted dictionary before selecting results, so it can traverse the device's stored timeline.
+Dictionary lookups are average O(1). Standard queue and stack operations are amortised O(1). Priority queue operations are O(log n). Sorted-dictionary insertions are O(log n) in the number of timestamp keys. A SortedSet timestamp index supports descending traversal without reversing the entire dictionary. SortedDictionary buckets retain timestamp ties. History retains the newest 10,000 readings by arrival timestamp; raw jagged-array batches are capped at 256. History statistics describe retained readings, while device counters count processed readings.
 
 Part 1 generic packets, operator overloads, jagged arrays, lists and recursive deployment validation remain in the source.
 
@@ -183,7 +183,7 @@ The undo stack holds up to 1,000 commands; command-event history retains up to 2
 
 A fault is identified by device ID and a normalised fault type. Repeated anomalies update one active alert. A normal reading for the same metric resolves it. A recurring fault can create a new alert.
 
-The connection monitor checks every two seconds. By default, a device with no processed telemetry for 15 seconds becomes Disconnected. Resumed telemetry restores Online status and resolves its disconnect alert. Configure `SmartX:DisconnectTimeoutSeconds` to adjust the timeout.
+The connection monitor checks every two seconds. By default, a device with no accepted telemetry for 15 seconds becomes Disconnected. Resumed telemetry restores Online status and resolves its disconnect alert. Configure `SmartX:DisconnectTimeoutSeconds` to adjust the timeout.
 
 Active fault state and historical anomaly records serve different purposes: resolving an alert does not remove its historical readings.
 
@@ -296,6 +296,19 @@ Use a unique metric because automatic simulation updates the ordinary Moisture m
 
 Check Temperature, Moisture and Power graphs, ValveState ON/OFF history, chronological ordering, automatic updates and preserved selections when navigating between modules.
 
+## Repository verification project
+
+Run the committed checks from the repository root:
+
+    dotnet run --project .\SmartX.Verification\SmartX.Verification.csproj
+
+Latest result: all 23 checks passed.
+
+- 14 retention and ordering checks.
+- 9 connectivity checks covering accepted arrivals, queue rejection, delayed processing and recovery.
+
+The connectivity checks invoke the controller directly with an HTTP context. Earlier integration checks exercised the running HTTP server.
+
 ## Verification completed during development
 
 - Backend and frontend builds.
@@ -317,8 +330,8 @@ Check Temperature, Moisture and Power graphs, ValveState ON/OFF history, chronol
 - Registered devices, telemetry, command state, alerts and learned patterns are in memory and reset on API restart.
 - Upload files remain on disk; runtime sensor IDs reset on restart.
 - Frontend search context is for a single-operator prototype. Separate operator sessions are not implemented.
-- The telemetry queue and learning histories are bounded, but telemetry history currently grows during the running session.
-- Connectivity is based on processed telemetry, so a severe processing backlog can affect disconnect detection.
+- Telemetry history retains up to 10,000 readings across devices. Older readings are removed from global and device indexes. Raw batches are capped at 256.
+- Connectivity follows accepted HTTP arrivals. Delayed processing and full-queue rejections do not refresh last-seen activity.
 - Polling provides regular updates; WebSockets and physical IoT hardware are not required for this simulation.
 - Backend command endpoints simulate state changes; no physical actuator is controlled.
 - Graph traversal, mesh routing and tree-based range querying belong to Part 3.
@@ -330,4 +343,5 @@ Existing Part 1 screenshots are under `SmartX.API/Evidence`.
 
 Part 2 evidence should demonstrate navigation, queue counters, filtering, unique alerts, disconnect recovery, commands and undo, learned Suggested Actions, and ordered timelines.
 
-The Part 2 video or presentation must follow the lecturer's instructions. Add the final demonstration link when available.
+The lecturer requires a Part 2 video presentation. Recording, upload and the final video link remain outstanding.
+

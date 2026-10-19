@@ -74,7 +74,18 @@ Screenshot files should show actual application results. The assessment brief se
 
 - Runtime device data, telemetry, commands and learned patterns reset when the API restarts.
 - Search context is shared in this single-operator prototype.
-- Telemetry history currently grows during the running session.
-- Connectivity is based on processed telemetry.
+- Telemetry history retains the newest 10,000 readings; raw numeric batches are capped at 256.
+- Connectivity follows accepted HTTP arrivals. Processing old queued packets cannot falsely reconnect a device.
 - Part 3 network topology and routing remain reserved for the final PoE.
-- Most isolated checks were executed using temporary console projects; their results are summarised here. They are not a committed automated test suite.
+- Earlier isolated checks used temporary console projects. SmartX.Verification now contains 23 committed retention and connectivity checks, all passing.
+
+
+## Additional verification after source review
+
+All 23 committed repository checks passed: 14 retention checks and 9 connectivity checks.
+
+Run from the repository root:
+
+    dotnet run --project .\SmartX.Verification\SmartX.Verification.csproj
+
+The lecturer requires a video presentation. Recording and the final video link remain outstanding.
