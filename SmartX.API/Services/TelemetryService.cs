@@ -70,7 +70,7 @@ public class TelemetryService
     // ============================================================
 
     public (bool Success, string Message, TelemetryRecord? Record)
-        Process(TelemetryInput input)
+        Process(TelemetryInput input, DateTime? receivedAt = null)
     {
         if (!Guid.TryParse(input.SensorId, out var sensorGuid))
         {
@@ -202,6 +202,7 @@ public class TelemetryService
             }
 
             // Store the processed telemetry.
+            record.Timestamp = receivedAt ?? record.Timestamp;
             _history.Add(record);
 
             // Update the sensor activity.

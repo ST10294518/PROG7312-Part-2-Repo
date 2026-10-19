@@ -9,6 +9,9 @@ public sealed class TelemetryQueueProcessor : BackgroundService
     private readonly ActiveAlertService _alerts;
     private readonly ILogger<TelemetryQueueProcessor> _logger;
 
+    private readonly Dictionary<(Guid SensorId, string Metric), DateTime>
+        _latestAlertReadings = new();
+
     private long _processed;
     private long _failed;
 
@@ -34,6 +37,25 @@ public sealed class TelemetryQueueProcessor : BackgroundService
         };
     }
 
+    private bool IsLatestObservation(
+        SmartX.API.Models.TelemetryRecord record,
+        DateTime receivedAt)
+    {
+        var key = (
+            Guid.Parse(record.SensorId),
+            record.Metric.Trim().ToUpperInvariant());
+
+        // Only this single background worker accesses this dictionary.
+        if (_latestAlertReadings.TryGetValue(key, out var latest) &&
+            receivedAt < latest)
+        {
+            return false;
+        }
+
+        _latestAlertReadings[key] = receivedAt;
+        return true;
+    }
+
     protected override async Task ExecuteAsync(
         CancellationToken stoppingToken)
     {
@@ -53,11 +75,11 @@ public sealed class TelemetryQueueProcessor : BackgroundService
 
                     try
                     {
-                        var result = _telemetry.Process(packet.Input);
+                        var result = _telemetry.Process(packet.Input, packet.EnqueuedAt);
 
                         if (result.Success)
                         {
-                            if (result.Record is not null)
+                            if (result.Record is not null && IsLatestObservation(result.Record, packet.EnqueuedAt))
                             {
                                 var record = result.Record;
                                 var sensorId = Guid.Parse(record.SensorId);
@@ -126,4 +148,5 @@ public sealed class TelemetryQueueProcessor : BackgroundService
         }
     }
 }
+
 
