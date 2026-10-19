@@ -89,3 +89,17 @@ Run from the repository root:
     dotnet run --project .\SmartX.Verification\SmartX.Verification.csproj
 
 The lecturer requires a video presentation. Recording and the final video link remain outstanding.
+
+## Seeded dataset verification
+
+The Seed-DemoData.ps1 script was executed with 80 rounds.
+
+- 12 distinct demo devices, including nine newly registered devices.
+- 1,280 HTTP telemetry requests accepted.
+- All 1,280 readings stored with unique record IDs.
+- 640 float, 320 integer and 320 Boolean readings.
+- One expected moisture demo alert and one expected power demo alert.
+- Background processor reported zero failures.
+- Queue status at verification: zero pending and zero rejected packets.
+
+The script recreates the in-memory demonstration dataset after API restart.

@@ -345,3 +345,27 @@ Part 2 evidence should demonstrate navigation, queue counters, filtering, unique
 
 The lecturer requires a Part 2 video presentation. Recording, upload and the final video link remain outstanding.
 
+
+## Seeded demonstration dataset
+
+With the API running, execute from the repository root:
+
+    .\scripts\Seed-DemoData.ps1 -Rounds 80
+
+The default run prepares 12 devices and submits 1,280 readings through the HTTP telemetry endpoint:
+
+- Four environmental devices: 640 float readings.
+- Four power devices: 320 integer readings.
+- Four actuators: 320 Boolean readings.
+
+Existing devices are reused by MAC address. Repeating the script adds another batch of readings.
+
+The dataset includes a critical Moisture-Demo reading for Greenhouse Zone B and a critical Power-Demo reading for Solar Inverter Room. Select the -Demo metrics in the timeline to inspect their history.
+
+Avoid issuing actuator commands during seeding because the script captures their states at the start.
+
+Device registrations and readings are held in memory. Run the script again after restarting the API to recreate the dataset. The regular simulator continues updating registered devices.
+
+Seeded telemetry does not fabricate learned recommendations. Suggested Actions still require real search-command observations.
+
+Verification: all 1,280 readings reached history once, with 640 float, 320 integer and 320 Boolean readings. Both expected critical alerts were active without duplicates, and no processing failures were reported.
