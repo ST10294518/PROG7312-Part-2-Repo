@@ -6,6 +6,7 @@ public sealed class TelemetryQueueProcessor : BackgroundService
 {
     private readonly TelemetryProcessingQueue _queue;
     private readonly TelemetryService _telemetry;
+    private readonly ActiveAlertService _alerts;
     private readonly ILogger<TelemetryQueueProcessor> _logger;
 
     private long _processed;
@@ -14,10 +15,12 @@ public sealed class TelemetryQueueProcessor : BackgroundService
     public TelemetryQueueProcessor(
         TelemetryProcessingQueue queue,
         TelemetryService telemetry,
+        ActiveAlertService alerts,
         ILogger<TelemetryQueueProcessor> logger)
     {
         _queue = queue;
         _telemetry = telemetry;
+        _alerts = alerts;
         _logger = logger;
     }
 
@@ -54,6 +57,33 @@ public sealed class TelemetryQueueProcessor : BackgroundService
 
                         if (result.Success)
                         {
+                            if (result.Record is not null)
+                            {
+                                var record = result.Record;
+                                var sensorId = Guid.Parse(record.SensorId);
+                                var faultType = "Telemetry:" + record.Metric.Trim();
+
+                                if (record.IsAnomaly)
+                                {
+                                    var isNew = _alerts.Raise(
+                                        sensorId,
+                                        faultType,
+                                        record.AlertMessage);
+
+                                    if (isNew)
+                                    {
+                                        _logger.LogInformation(
+                                            "New active fault for {SensorId}: {FaultType}",
+                                            sensorId,
+                                            faultType);
+                                    }
+                                }
+                                else
+                                {
+                                    _alerts.Resolve(sensorId, faultType);
+                                }
+                            }
+
                             Interlocked.Increment(ref _processed);
                         }
                         else
@@ -96,3 +126,4 @@ public sealed class TelemetryQueueProcessor : BackgroundService
         }
     }
 }
+
