@@ -1,4 +1,5 @@
-﻿import DeviceOperations from "./DeviceOperations";
+﻿import ActuatorControls from "./ActuatorControls";
+import DeviceOperations from "./DeviceOperations";
 import { useEffect, useState } from "react";
 
 const API = "http://localhost:5206/api";
@@ -84,7 +85,9 @@ export default function CommandDashboard() {
                 </>
             )}
             <DeviceOperations />
+            <ActuatorControls />
         </main>
     );
 }
+
 

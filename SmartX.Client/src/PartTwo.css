@@ -164,3 +164,40 @@
     .sx-filters { grid-template-columns: 1fr; }
     .sx-panel { padding: 18px; }
 }
+
+.sx-section-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+.sx-button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 14px;
+}
+.sx-table-wrap {
+    overflow-x: auto;
+    margin-top: 16px;
+}
+.sx-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #e8f4f8;
+    font-size: 13px;
+    text-align: left;
+}
+.sx-table th, .sx-table td {
+    padding: 13px 12px;
+    border-bottom: 1px solid #254252;
+    vertical-align: top;
+}
+.sx-table th {
+    background: #102b3b;
+    color: #b8cbd6;
+    white-space: nowrap;
+}
+.sx-table td:first-child { white-space: nowrap; }
+.sx-table tbody tr:hover { background: #102b3b; }
