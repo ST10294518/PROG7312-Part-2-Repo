@@ -103,3 +103,11 @@ The Seed-DemoData.ps1 script was executed with 80 rounds.
 - Queue status at verification: zero pending and zero rejected packets.
 
 The script recreates the in-memory demonstration dataset after API restart.
+
+## Standard metric integration
+
+The seed script now uses Temperature, Moisture, Power and ValveState, matching the regular simulator.
+
+The timeline excludes older metric names ending in -Demo from its selector. Existing records remain in backend history.
+
+Frontend lint and production build passed. Dashboard checks confirmed standard metrics display correctly, separate -Demo options are removed, and readings continue updating.

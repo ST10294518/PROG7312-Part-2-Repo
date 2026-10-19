@@ -360,7 +360,7 @@ The default run prepares 12 devices and submits 1,280 readings through the HTTP 
 
 Existing devices are reused by MAC address. Repeating the script adds another batch of readings.
 
-The dataset includes a critical Moisture-Demo reading for Greenhouse Zone B and a critical Power-Demo reading for Solar Inverter Room. Select the -Demo metrics in the timeline to inspect their history.
+The dataset includes a critical Moisture reading for Greenhouse Zone B and a critical Power reading for Solar Inverter Room. Select Temperature, Moisture, Power or ValveState in the timeline. Seeded readings and ongoing simulator readings use the same metric names. Subsequent normal readings can resolve faults created by the final seed round.
 
 Avoid issuing actuator commands during seeding because the script captures their states at the start.
 
@@ -369,3 +369,4 @@ Device registrations and readings are held in memory. Run the script again after
 Seeded telemetry does not fabricate learned recommendations. Suggested Actions still require real search-command observations.
 
 Verification: all 1,280 readings reached history once, with 640 float, 320 integer and 320 Boolean readings. Both expected critical alerts were active without duplicates, and no processing failures were reported.
+

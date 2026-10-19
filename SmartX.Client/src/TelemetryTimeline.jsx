@@ -134,13 +134,19 @@ export default function TelemetryTimeline() {
                 }
 
                 const data = await readJson(
-                    `Telemetry/sensor/${selected.id}?count=100`,
+                    `Telemetry/sensor/${selected.id}?count=500`,
                     controller.signal
                 );
 
                 if (!controller.signal.aborted) {
-                    setRecords(data);
-                    const metrics = [...new Set(data.map(record => record.metric))];
+                    const workingRecords = data
+                        .filter(record => !/-Demo$/i.test(record.metric))
+                        .slice(-100);
+
+                    setRecords(workingRecords);
+                    const metrics = [...new Set(
+                        workingRecords.map(record => record.metric)
+                    )];
                     setMetric(previous =>
                         metrics.includes(previous) ? previous : metrics[0] ?? ""
                     );
@@ -257,3 +263,4 @@ export default function TelemetryTimeline() {
         </section>
     );
 }
+

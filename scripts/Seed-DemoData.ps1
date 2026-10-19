@@ -136,14 +136,14 @@ try {
                         50 + 15 * [Math]::Cos($phase), 2
                     )
 
-                    # Retain a repeatable critical example in Zone B.
+                    # Submit a critical example on the final round for Zone B.
                     if ($round -eq ($Rounds - 1) -and
                         $device.macAddress -eq "02:73:12:20:00:01") {
                         $moisture = [single]5
                     }
 
-                    Send-Reading $sensorId "Temperature-Demo" "float" $temperature
-                    Send-Reading $sensorId "Moisture-Demo" "float" $moisture
+                    Send-Reading $sensorId "Temperature" "float" $temperature
+                    Send-Reading $sensorId "Moisture" "float" $moisture
                     $accepted += 2
                 }
 
@@ -152,18 +152,18 @@ try {
                         1800 + 700 * [Math]::Sin($phase)
                     )
 
-                    # Retain a repeatable critical power example.
+                    # Submit a critical power example on the final round.
                     if ($round -eq ($Rounds - 1) -and
                         $device.macAddress -eq "02:73:12:20:00:04") {
                         $power = 6500
                     }
 
-                    Send-Reading $sensorId "Power-Demo" "int" $power
+                    Send-Reading $sensorId "Power" "int" $power
                     $accepted++
                 }
 
                 "Actuator" {
-                    Send-Reading $sensorId "ValveState-Demo" "bool" `
+                    Send-Reading $sensorId "ValveState" "bool" `
                         $actuatorStates[$sensorId]
                     $accepted++
                 }
@@ -182,8 +182,9 @@ finally {
 Write-Host ""
 Write-Host "Seed submission complete: $accepted readings accepted."
 Write-Host "Background processing may still be finishing."
-Write-Host "Inspect Greenhouse Zone B for Moisture-Demo."
-Write-Host "Inspect Solar Inverter Room for Power-Demo."
-Write-Host "Use the timeline metric selector to view the -Demo readings."
+Write-Host "Inspect Greenhouse Zone B for Moisture."
+Write-Host "Inspect Solar Inverter Room for Power."
+Write-Host "Select Temperature, Moisture, Power or ValveState in the timeline."
 Write-Host "Repeating this script reuses devices and adds another reading batch."
 Write-Host "Runtime demo data resets when the API restarts."
+
