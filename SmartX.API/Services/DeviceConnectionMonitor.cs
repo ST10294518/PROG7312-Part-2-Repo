@@ -31,10 +31,7 @@ public sealed class DeviceConnectionMonitor : BackgroundService
             while (!stoppingToken.IsCancellationRequested)
             {
                 CheckConnections();
-
-                await Task.Delay(
-                    TimeSpan.FromSeconds(2),
-                    stoppingToken);
+                await Task.Delay(TimeSpan.FromSeconds(2), stoppingToken);
             }
         }
         catch (OperationCanceledException)
@@ -48,40 +45,27 @@ public sealed class DeviceConnectionMonitor : BackgroundService
     {
         var cutoff = DateTime.UtcNow - _timeout;
 
-        foreach (var sensor in _sensors.GetAll())
+        // Activity updates and connection inspection share the sensor lock.
+        _sensors.InspectConnections(cutoff, (sensor, disconnected) =>
         {
-            if (sensor.LastSeen < cutoff)
+            if (disconnected)
             {
-                sensor.Status = "Disconnected";
-
-                // Repeated monitor checks must not create new notifications.
-                if (!_alerts.IsActive(sensor.Id, "Disconnected"))
-                {
-                    var isNew = _alerts.Raise(
+                if (!_alerts.IsActive(sensor.Id, "Disconnected") &&
+                    _alerts.Raise(
                         sensor.Id,
                         "Disconnected",
-                        $"No telemetry received for at least " +
-                        $"{_timeout.TotalSeconds:0} seconds.");
-
-                    if (isNew)
-                    {
-                        _logger.LogInformation(
-                            "Device {SensorId} disconnected.",
-                            sensor.Id);
-                    }
-                }
-            }
-            else
-            {
-                sensor.Status = "Online";
-
-                if (_alerts.Resolve(sensor.Id, "Disconnected"))
+                        $"No accepted telemetry received for at least " +
+                        $"{_timeout.TotalSeconds:0} seconds."))
                 {
                     _logger.LogInformation(
-                        "Device {SensorId} reconnected.",
-                        sensor.Id);
+                        "Device {SensorId} disconnected.", sensor.Id);
                 }
             }
-        }
+            else if (_alerts.Resolve(sensor.Id, "Disconnected"))
+            {
+                _logger.LogInformation(
+                    "Device {SensorId} reconnected.", sensor.Id);
+            }
+        });
     }
 }

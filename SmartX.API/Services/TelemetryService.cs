@@ -206,7 +206,7 @@ public class TelemetryService
             _history.Add(record);
 
             // Update the sensor activity.
-            _sensorService.UpdateLastSeen(input.SensorId);
+            _sensorService.RecordProcessed(input.SensorId);
 
             // Update alert count if an anomaly was detected.
             if (record.IsAnomaly)
@@ -488,3 +488,4 @@ public readonly struct NumericTelemetry
             CultureInfo.InvariantCulture);
     }
 }
+

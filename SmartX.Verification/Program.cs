@@ -138,3 +138,6 @@ catch (ArgumentOutOfRangeException)
 Check(rejectedCapacity, "Invalid retention capacity is rejected.");
 
 Console.WriteLine($"All {passed} retention and ordering checks passed.");
+passed += ConnectivityChecks.Run();
+Console.WriteLine($"All {passed} repository verification checks passed.");
+

@@ -10,17 +10,20 @@ namespace SmartX.API.Controllers;
 public class TelemetryController : ControllerBase
 {
     private readonly TelemetryService _telemetryService;
+    private readonly SensorService _sensors;
     private readonly TelemetryInputValidator _validator;
     private readonly TelemetryProcessingQueue _queue;
     private readonly TelemetryQueueProcessor _processor;
 
     public TelemetryController(
         TelemetryService telemetryService,
+        SensorService sensors,
         TelemetryInputValidator validator,
         TelemetryProcessingQueue queue,
         TelemetryQueueProcessor processor)
     {
         _telemetryService = telemetryService;
+        _sensors = sensors;
         _validator = validator;
         _queue = queue;
         _processor = processor;
@@ -83,6 +86,8 @@ public class TelemetryController : ControllerBase
             });
         }
 
+        _sensors.MarkReceived(Guid.Parse(normalised.SensorId), queued!.EnqueuedAt);
+
         return Accepted(new
         {
             message = "Telemetry accepted for background processing.",
@@ -92,3 +97,4 @@ public class TelemetryController : ControllerBase
         });
     }
 }
+

@@ -64,19 +64,51 @@ public class SensorService
         return (true, "Sensor registered successfully.", sensor);
     }
 
-    public void UpdateLastSeen(string sensorId)
+    private readonly object _activitySync = new();
+
+    public void MarkReceived(Guid sensorId, DateTime receivedAt)
+    {
+        lock (_activitySync)
+        {
+            var sensor = _sensors.FindById(sensorId);
+
+            if (sensor == null)
+                return;
+
+            if (receivedAt > sensor.LastSeen)
+                sensor.LastSeen = receivedAt;
+
+            sensor.Status = "Online";
+        }
+    }
+
+    public void RecordProcessed(string sensorId)
     {
         if (!Guid.TryParse(sensorId, out var id))
             return;
 
-        var sensor = _sensors.FindById(id);
+        lock (_activitySync)
+        {
+            var sensor = _sensors.FindById(id);
 
-        if (sensor == null)
-            return;
+            if (sensor != null)
+                sensor.TotalReadings++;
+        }
+    }
 
-        sensor.LastSeen = DateTime.UtcNow;
-        sensor.Status = "Online";
-        sensor.TotalReadings++;
+    public void InspectConnections(
+        DateTime cutoff,
+        Action<Sensor, bool> inspect)
+    {
+        lock (_activitySync)
+        {
+            foreach (var sensor in _sensors.ToList())
+            {
+                var disconnected = sensor.LastSeen < cutoff;
+                sensor.Status = disconnected ? "Disconnected" : "Online";
+                inspect(sensor, disconnected);
+            }
+        }
     }
 
     public void UpdateAlertCount(string sensorId)
