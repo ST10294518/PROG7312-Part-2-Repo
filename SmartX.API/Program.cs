@@ -26,6 +26,7 @@ builder.Services.AddSingleton<FileService>();
 builder.Services.AddSingleton<CommandService>();
 
 builder.Services.AddSingleton<ActiveAlertService>();
+builder.Services.AddHostedService<DeviceConnectionMonitor>();
 builder.Services.AddSingleton<TelemetryInputValidator>();
 builder.Services.AddSingleton<TelemetryProcessingQueue>(
     _ => new TelemetryProcessingQueue(10000));
@@ -62,6 +63,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 
 
 

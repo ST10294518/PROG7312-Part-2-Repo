@@ -9,6 +9,7 @@ public sealed class TelemetrySimulationService : BackgroundService
     private readonly IHttpClientFactory _clients;
     private readonly ILogger<TelemetrySimulationService> _logger;
     private readonly SemaphoreSlim _cycleLock = new(1, 1);
+    private readonly HashSet<Guid> _pausedSensors = new();
 
     public TelemetrySimulationService(
         IHttpClientFactory clients,
@@ -16,6 +17,41 @@ public sealed class TelemetrySimulationService : BackgroundService
     {
         _clients = clients;
         _logger = logger;
+    }
+
+    public async Task SetPausedAsync(
+        Guid sensorId,
+        bool paused,
+        CancellationToken cancellationToken)
+    {
+        await _cycleLock.WaitAsync(cancellationToken);
+
+        try
+        {
+            if (paused)
+                _pausedSensors.Add(sensorId);
+            else
+                _pausedSensors.Remove(sensorId);
+        }
+        finally
+        {
+            _cycleLock.Release();
+        }
+    }
+
+    public async Task<List<Guid>> GetPausedAsync(
+        CancellationToken cancellationToken)
+    {
+        await _cycleLock.WaitAsync(cancellationToken);
+
+        try
+        {
+            return _pausedSensors.OrderBy(id => id).ToList();
+        }
+        finally
+        {
+            _cycleLock.Release();
+        }
     }
 
     public async Task<int> RunCycleAsync(CancellationToken cancellationToken)
@@ -33,6 +69,9 @@ public sealed class TelemetrySimulationService : BackgroundService
 
             foreach (var sensor in sensors)
             {
+                if (_pausedSensors.Contains(sensor.Id))
+                    continue;
+
                 if (sensor.SensorCategory == "Environmental")
                 {
                     var temperature = Random.Shared.Next(10) == 0
@@ -149,4 +188,5 @@ public sealed class TelemetrySimulationService : BackgroundService
         }
     }
 }
+
 
