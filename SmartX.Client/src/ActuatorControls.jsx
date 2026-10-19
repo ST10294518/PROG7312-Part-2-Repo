@@ -77,7 +77,7 @@ export default function ActuatorControls() {
         return () => {
             controller.abort();
             window.clearTimeout(timer);
-            requestVersion.current++;
+
         };
     }, [refresh]);
 
@@ -216,3 +216,4 @@ export default function ActuatorControls() {
         </section>
     );
 }
+

@@ -62,7 +62,7 @@ export default function SuggestedActions() {
         return () => {
             controller.abort();
             window.clearTimeout(timer);
-            requestVersion.current++;
+
         };
     }, [refresh]);
 
@@ -168,3 +168,4 @@ export default function SuggestedActions() {
         </section>
     );
 }
+

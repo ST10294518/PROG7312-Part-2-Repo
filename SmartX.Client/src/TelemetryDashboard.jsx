@@ -35,8 +35,6 @@ function App() {
 
     const loadDashboard = async () => {
         try {
-            setError("");
-
             const [
                 statusResponse,
                 statisticsResponse,
@@ -65,11 +63,12 @@ function App() {
             const telemetryData = await telemetryResponse.json();
             const sensorsData = await sensorsResponse.json();
 
+            setError("");
             setStatus(statusData);
             setStatistics(statisticsData);
             setTelemetry(telemetryData);
             setSensors(sensorsData);
-        } catch (err) {
+        } catch {
             setError(
                 "Unable to connect to the Smart-X API. Make sure the API is running."
             );
@@ -356,14 +355,22 @@ function App() {
     };
 
     useEffect(() => {
-        loadDashboard();
+        let active = true;
+        let timer;
 
-        const interval = setInterval(
-            loadDashboard,
-            5000
-        );
+        async function poll() {
+            await loadDashboard();
 
-        return () => clearInterval(interval);
+            if (active)
+                timer = window.setTimeout(poll, 5000);
+        }
+
+        timer = window.setTimeout(poll, 0);
+
+        return () => {
+            active = false;
+            window.clearTimeout(timer);
+        };
     }, []);
 
     const formatValue = (record) => {
@@ -1362,3 +1369,5 @@ function App() {
 }
 
 export default App;
+
+
