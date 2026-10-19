@@ -33,7 +33,18 @@ builder.Services.AddSingleton<TelemetryQueueProcessor>();
 builder.Services.AddHostedService<TelemetryQueueProcessor>(
     provider => provider.GetRequiredService<TelemetryQueueProcessor>());
 
-// HTTP-based device simulation will be added next.
+builder.Services.AddHttpClient("SmartXSimulator", client =>
+{
+    var baseUrl = builder.Configuration["SmartX:SimulatorApiUrl"]
+        ?? "http://localhost:5206/";
+
+    client.BaseAddress = new Uri(baseUrl.TrimEnd('/') + "/");
+    client.Timeout = TimeSpan.FromSeconds(5);
+});
+
+builder.Services.AddSingleton<TelemetrySimulationService>();
+builder.Services.AddHostedService<TelemetrySimulationService>(
+    provider => provider.GetRequiredService<TelemetrySimulationService>());
 
 var app = builder.Build();
 
@@ -49,3 +60,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
