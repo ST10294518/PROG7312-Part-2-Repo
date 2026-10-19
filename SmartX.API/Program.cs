@@ -23,6 +23,7 @@ builder.Services.AddCors(options =>
 builder.Services.AddSingleton<SensorService>();
 builder.Services.AddSingleton<TelemetryService>();
 builder.Services.AddSingleton<FileService>();
+builder.Services.AddSingleton<CommandService>();
 
 builder.Services.AddSingleton<TelemetryInputValidator>();
 builder.Services.AddSingleton<TelemetryProcessingQueue>(
@@ -60,4 +61,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 

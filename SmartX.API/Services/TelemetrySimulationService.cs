@@ -57,7 +57,7 @@ public sealed class TelemetrySimulationService : BackgroundService
                 {
                     accepted += await SendAsync(
                         client, sensor.Id, "ValveState", "bool",
-                        false, cancellationToken);
+                        await GetActuatorStateAsync(client, sensor.Id, cancellationToken), cancellationToken);
                 }
             }
 
@@ -67,6 +67,20 @@ public sealed class TelemetrySimulationService : BackgroundService
         {
             _cycleLock.Release();
         }
+    }
+
+    private static async Task<bool> GetActuatorStateAsync(
+        HttpClient client,
+        Guid sensorId,
+        CancellationToken cancellationToken)
+    {
+        var response = await client.GetFromJsonAsync<ActuatorStateResponse>(
+            $"api/Command/state/{sensorId}", cancellationToken);
+
+        if (response is null)
+            throw new InvalidOperationException("Actuator state response was empty.");
+
+        return response.State;
     }
 
     private async Task<int> SendAsync<T>(
@@ -135,3 +149,4 @@ public sealed class TelemetrySimulationService : BackgroundService
         }
     }
 }
+
